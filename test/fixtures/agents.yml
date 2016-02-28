@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comission: 9.99
+  phone: MyString
+  mobile: MyString
+  user_id: 
+
+two:
+  comission: 9.99
+  phone: MyString
+  mobile: MyString
+  user_id: 

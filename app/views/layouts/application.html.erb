@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+
+  <%= csrf_meta_tags %>
+
+  <title><%= "Real Estate - #{@page_title}" %></title>
+
+</head>
+<!-- THIS HELPS LOADING JAVASCRIPT FOR SPECIFIC PAGES ONLY -->
+<body class="<%= controller_name %> <%= action_name %>">
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <%=  link_to "Real Estate", root_path, class: "navbar-brand" %>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li>
+                  <a href="#"><i class="fa fa-cog fa-fw"> </i></a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <%= @current_user.full_name %> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                        <%= link_to my_account_path do %>
+                            <i class="fa fa-user fa-fw"></i> Preferences
+                        <% end %>
+                        </li>
+                        <li><a href="#"><i class="fa fa-question-circle fa-fw"></i> Help</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                        <%= link_to(sessions_destroy_path, method: :delete) do %>
+                            <i class="fa fa-sign-out fa-fw"></i> Logout
+                        <% end %>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="active">
+                            <%= link_to dashboard_path do %>
+                              <i class="fa fa-dashboard fa-fw"></i> Dashboard
+                            <% end %>
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-home fa-fw"></i> Properties<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <%= link_to 'Property List', properties_path %>
+                                </li>
+                                <li>
+                                    <%= link_to 'New Property', new_property_path %>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-briefcase fa-fw"></i> Agents<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <%= link_to 'Agents List', agents_path %>
+                                </li>
+                                <li>
+                                    <%= link_to 'New Agent', new_agent_path %>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>                        
+                          
+                        <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Customers<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <%= link_to 'Customers List', customers_path %>
+                                </li>
+                                <li>
+                                    <%= link_to 'New Customer', new_customer_path %>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>   
+
+                        <li>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> Catalogs<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <%= link_to 'States', states_path %>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <%= link_to reports_path do %>
+                              <i class="fa fa-file-pdf-o fa-fw"></i> Reports
+                            <% end %>                        
+                        </li>                      
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+
+            <!-- PAGE TITLE -->
+            <div class="row">
+              <div class="col-md-12">
+                <div style="width: 100%; height: 100%;"><h1><%= @page_title %></h1></div>
+              </div>
+            </div>
+
+            <!-- PAGE WARNINGS -->
+            <% unless flash.empty? %>
+            <div class="row">
+              <div class="col-md-12">
+                <div id="alerts-container">
+                    <div class="alert alert-<%= flash[:type] %> alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <%= flash[:msg] %>
+                    </div>    
+                </div>
+              </div>
+            </div>
+            <% end %>
+
+
+              <%= yield %>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+</body>
+</html>

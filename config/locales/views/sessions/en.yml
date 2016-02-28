@@ -1,0 +1,7 @@
+en:
+  views:
+    sessions:
+      username: "username"
+      password: "password"
+      login: "login"
+      forgot_password: "I forgot my password"

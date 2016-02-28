@@ -1,0 +1,4 @@
+en:
+  controllers:
+    sessions:
+      bad_credentials: "Bad username or password"

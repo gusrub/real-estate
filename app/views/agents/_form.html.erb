@@ -1,0 +1,66 @@
+<%= form_for(@agent) do |f| %>
+
+  <%= f.fields_for :user do |u| %>
+    <div class="form-group">
+      <%= u.label :first_name, "First Name" %><br>
+      <%= u.text_field :first_name, class: "form-control" %>
+      <% if @agent.user.errors.has_key?(:first_name) %>
+        <span class="field-error"><%= @agent.user.errors.messages[:first_name].join(", ") %></span>
+      <% end %>
+    </div>
+
+    <div class="form-group">
+      <%= u.label :last_name, "Last Name" %><br>
+      <%= u.text_field :last_name, class: "form-control" %>
+      <% if @agent.user.errors.has_key?(:last_name) %>
+        <span class="field-error"><%= @agent.user.errors.messages[:last_name].join(", ") %></span>
+      <% end %>
+    </div>    
+
+    <div class="form-group">
+      <%= u.label :email, "E-Mail" %><br>
+      <%= u.text_field :email, class: "form-control", type: "email" %>
+      <% if @agent.user.errors.has_key?(:email) %>
+        <span class="field-error"><%= @agent.user.errors.messages[:email].join(", ") %></span>
+      <% end %>
+    </div>
+
+    <div class="form-group">
+      <%= u.label :password, "Password" %><br>
+      <%= u.text_field :password, class: "form-control", type: "password" %>
+      <% if @agent.user.errors.has_key?(:password) %>
+        <span class="field-error"><%= @agent.user.errors.messages[:password].join(", ") %></span>
+      <% end %>
+    </div>
+    
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :comission, "Comission" %><br>
+    <%= f.text_field :comission, class: "form-control" %>
+    <% if @agent.errors.has_key?(:comission) %>
+      <span class="field-error"><%= @agent.errors.messages[:comission].join(", ") %></span>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :phone, "Phone" %><br>
+    <%= f.text_field :phone, class: "form-control" %>
+    <% if @agent.errors.has_key?(:phone) %>
+      <span class="field-error"><%= @agent.errors.messages[:phone].join(", ") %></span>
+    <% end %>
+  </div> 
+
+  <div class="form-group">
+    <%= f.label :mobile, "Mobile" %><br>
+    <%= f.text_field :mobile, class: "form-control" %>
+    <% if @agent.errors.has_key?(:mobile) %>
+      <span class="field-error"><%= @agent.errors.messages[:mobile].join(", ") %></span>
+    <% end %>
+  </div> 
+ 
+  <div class="form-group">
+    <%= f.submit "Save", class: "btn btn-primary" %>
+  </div>
+<% end %>
+

@@ -1,0 +1,85 @@
+<!-- SEARCH BAR -->
+<div class="row summary">
+  <div class="col-md-12">
+  <%= form_tag search_agents_path, method: "get" do %>
+    <div class="form-group">
+      <div class="input-group">
+        <%= text_field_tag "search_criteria", flash[:search_criteria], placeholder: "first name, last name or email...", class: "form-control" %>
+        <span class="input-group-btn">
+        <%= button_tag type: "submit", class: "btn btn-default", id: "search_btn"  do %>
+          <span class="glyphicon glyphicon-search"></span> search
+        <% end %>
+        </span>
+      </div>
+    </div>
+  <% end %>
+  </div>   
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-hover table-bordered table-responsive">
+      <thead>
+        <tr>
+          <th class="text-center">Name</th>
+          <th class="text-center">Phone</th>
+          <th class="text-center">Mobile</th>
+          <th class="text-center">E-Mail</th>
+          <th class="text-center">Comission</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @agents.each do |agent| %>
+          <tr>
+            <td class="text-left"><%= agent.user.full_name %></td>
+            <td class="text-center"><%= agent.phone %></td>
+            <td class="text-center"><%= agent.mobile %></td>
+            <td class="text-center"><%= agent.user.email %></td>
+            <td class="text-center"><%= agent.comission %></td>
+            <td class="text-center"><%= link_to 'Details', agent %></td>
+            <td class="text-center"><%= link_to 'Edit', edit_agent_path(agent) %></td>
+            <td class="text-center"><%= link_to 'Delete', agent, method: :delete, data: { confirm: 'Are you sure you want to delete this state?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>    
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <span style="font-style: italic">Showing <strong><%= @current_record_count %></strong> records of <strong><%= @total_record_count %></strong></span>
+  </div>
+  <div class="col-md-4">
+    <%= link_to 'New Agent', new_agent_path, class: "pull-right btn btn-primary" %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <nav>
+      <ul class="pagination">
+        <li class="disabled">
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <% 1.upto(@pages) do |page| %>
+          <% if flash[:search_criteria] %>
+            <li><%= link_to page, search_agents_path(search_criteria: flash[:search_criteria] , page: page) %></li>
+          <% else %>
+            <li><%= link_to page, page_agents_path(page) %></li>
+          <% end %>
+        <% end %>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>  
+  </div>
+</div>
+

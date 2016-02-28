@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title><%= t("422_page_title") %></title>
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+
+    <style type="text/css">
+        body { background-color: #eee; font-family: 'Roboto', Arial, sans-serif; color: #777; font-size: 14px; }
+        .content { width: 960px; margin: 0 auto; margin-top: 30px; }
+        .header { position: relative; height: 150px; }
+        .header .logo { position: absolute; display: inline-block; width: 60%; }
+        .header .type-error { position: absolute; right: 0; margin-top: 45px; display: inline-block; width: 40%; text-align: right; font-weight: 300; font-size: 40px; color: #ccc; }
+        .message { min-height: 300px; text-align: center; padding: 120px 0; box-sizing: border-box; font-size: 35px; }
+        .footer { text-align: center; border-top: 1px solid #acacaf; padding-top: 30px; }
+        .footer a { color: #1b75bb; text-decoration: none; font-weight: 300; }
+        @media (min-width: 501px) and (max-width: 959px){
+            .content { width: auto; margin: 10px; }
+            .header .logo { position: relative; display: block; width: 100%; }
+            .header .type-error { position: relative; margin-top: 8px; display: block; width: 100%; text-align: center; font-size: 30px; }
+            .message { text-align: center; padding: 150px 0; box-sizing: border-box; font-size: 35px; min-height: 150px; height: auto; }
+            .footer { text-align: center; border-top: 1px solid #acacaf; padding-top: 20px; }
+        }
+        @media (max-width: 500px){
+            .content { width: auto; margin: 10px; }
+            .header .logo { position: absolute; display: block; width: 100%; }
+            .header .type-error { position: absolute; margin-top: 90px; display: block; width: 100%; text-align: center; font-size: 30px; }
+            .message { text-align: center; padding: 30px 0; box-sizing: border-box; font-size: 35px; min-height: 150px; height: auto; }
+            .footer { text-align: center; border-top: 1px solid #acacaf; padding-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="header">
+            <div class="logo"><%= image_tag("home-128x128.png") %></div>
+            <div class="type-error">Error 422</div>
+        </div>
+        <div class="message">
+            <%= t("422_message") %>
+        </div>
+        <div class="footer">
+            <%= t("422_footer") %><br>
+            <a href="mailto:soporte@residencial.is"><%= t("422_contact_support") %></a>
+        </div>
+    </div>
+</body>
+</html>

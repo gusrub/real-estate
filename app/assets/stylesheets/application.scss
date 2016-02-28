@@ -1,0 +1,25 @@
+/*
+*= require_tree .
+*/
+
+@import "font-awesome";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "metisMenu";
+@import "sb-admin-2";
+
+span.field-error {
+  color: red;
+  display: block;
+  margin: 4px 0;
+}
+
+.error-exception-container {
+  margin: 25px 0;
+  background: #FEFCD7;
+  padding: 4px;
+  overflow-y: scroll;
+  color: red;
+  max-height: 100px;
+  font-family: courier;
+}

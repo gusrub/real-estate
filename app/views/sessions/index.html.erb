@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Real Estate</title>
+
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+
+  <%= csrf_meta_tags %>
+
+</head>
+
+<body style="background: #ededed" class="<%= controller_name %> <%= action_name %>">
+  <div class="container-fluid">
+    <div class="row">
+      <%= form_tag("/sessions/create", method: "post", id: "login-form") do %>
+      <div class="col-md-4 col-md-offset-4">
+        <%= image_tag("home-128x128.png") %>
+      </div>
+      <div class="col-md-4 col-md-offset-4">
+        <h1>Real Estate Application</h1>
+      </div>
+      <div class="col-md-4 col-md-offset-4">
+        <div id="alerts-container">
+        <% unless flash.empty? %>
+          <div class="alert alert-<%= flash[:type] %> alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><%= flash[:msg] %></div>
+        <% end %>
+        </div> 
+      </div>      
+      <div class="col-md-4 col-md-offset-4">
+        <div class="form-group">
+          <%= email_field_tag(:username, nil, class: 'form-control input-lg', placeholder: t("views.sessions.username")) %>
+        </div>
+      </div>
+      <div class="col-md-4 col-md-offset-4">
+        <div class="form-group">
+          <%= password_field_tag(:password, nil, class: 'form-control input-lg', placeholder: t("views.sessions.password")) %>  
+        </div>
+      </div>
+      <div class="col-md-4 col-md-offset-4">
+        <div class="form-group">    
+          <%= button_tag(t("views.sessions.login"), class: 'btn btn-primary btn-lg', id: 'btn-login') %>
+        </div>
+      </div> 
+      <div class="col-md-4 col-md-offset-4">
+        <div class="form-group">    
+          <%= link_to(t("views.sessions.forgot_password"), controller: 'sessions', action: 'forgot_password') %>
+        </div>
+      </div>      
+      <% end %>
+    </div>
+  </div>  
+</body>
+
+</html>
