@@ -31,6 +31,8 @@ gem 'mysql2', '~> 0.3.13'
 
 gem 'figaro'
 
+gem 'prawn-rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

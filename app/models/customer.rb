@@ -64,4 +64,16 @@ class Customer < ActiveRecord::Base
     }
   end 
 
+  def self.to_csv
+    attributes = %w{id title phone mobile user_id created_at updated_at}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |customer|
+        csv << attributes.map{ |attr| customer.send(attr) }
+      end
+    end
+  end
+
 end

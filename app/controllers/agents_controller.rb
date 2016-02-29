@@ -7,6 +7,18 @@ class AgentsController < ApplicationController
     @page_title = "Agents List"
     agent_data = Agent::paginate
     set_pagination(agent_data)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @agents, status: :ok }
+      format.csv { send_data Agent.to_csv, filename: "agents-#{Date.today}.csv" }
+      format.pdf do
+        pdf = Prawn::Document.new
+        pdf.text(Agent.to_csv)
+        pdf.render_file(Rails.root.join('tmp', "agents-#{Date.today}.pdf"))
+        send_file Rails.root.join('tmp', "agents-#{Date.today}.pdf")
+      end      
+    end     
   end
 
   # GET /agents/1

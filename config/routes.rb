@@ -56,8 +56,6 @@ Rails.application.routes.draw do
   put 'my_account', to: 'my_account#update'
   patch 'my_account', to: 'my_account#update'
 
-  get 'reports' => 'reports#index'
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

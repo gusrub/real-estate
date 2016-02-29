@@ -80,6 +80,18 @@ class Property < ActiveRecord::Base
     }
   end
 
+  def self.to_csv
+    attributes = %w{id title photo price street_number street_name suite zipcode city state_id agent_id status created_at updated_at}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |property|
+        csv << attributes.map{ |attr| property.send(attr) }
+      end
+    end
+  end
+
   private
     def delete_photo
       if photo

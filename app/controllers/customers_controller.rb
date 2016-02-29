@@ -7,6 +7,18 @@ class CustomersController < ApplicationController
     @page_title = "Customers List"
     customer_data = Customer::paginate
     set_pagination(customer_data)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @customers, status: :ok }
+      format.csv { send_data Customer.to_csv, filename: "customers-#{Date.today}.csv" }
+      format.pdf do
+        pdf = Prawn::Document.new
+        pdf.text(Customer.to_csv)
+        pdf.render_file(Rails.root.join('tmp', "customers-#{Date.today}.pdf"))
+        send_file Rails.root.join('tmp', "customers-#{Date.today}.pdf")
+      end      
+    end    
   end
 
   # GET /customers/1

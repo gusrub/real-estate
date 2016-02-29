@@ -11,6 +11,18 @@ class PropertiesController < ApplicationController
     @page_title = "Property List"
     property_data = Property::paginate
     set_pagination(property_data)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @properties, status: :ok }
+      format.csv { send_data Property.to_csv, filename: "properties-#{Date.today}.csv" }
+      format.pdf do
+        pdf = Prawn::Document.new
+        pdf.text(Property.to_csv)
+        pdf.render_file(Rails.root.join('tmp', "properties-#{Date.today}.pdf"))
+        send_file Rails.root.join('tmp', "properties-#{Date.today}.pdf")
+      end
+    end
   end
 
   # GET /properties/1

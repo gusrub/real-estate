@@ -123,10 +123,29 @@
                         </li>
 
                         <li>
-                            <%= link_to reports_path do %>
-                              <i class="fa fa-file-pdf-o fa-fw"></i> Reports
-                            <% end %>                        
-                        </li>                      
+                            <a href="#"><i class="fa fa-file-pdf-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <%= link_to 'Properties (CSV)', properties_path(format: :csv) %>
+                                </li>
+                                <li>
+                                    <%= link_to 'Properties (PDF)', properties_path(format: :pdf) %>
+                                </li>
+                                <li>
+                                    <%= link_to 'Customers (CSV)', customers_path(format: :csv) %>
+                                </li>
+                                <li>
+                                    <%= link_to 'Customers (PDF)', customers_path(format: :pdf) %>
+                                </li>
+                                <li>
+                                    <%= link_to 'Agents (CSV)', agents_path(format: :csv) %>
+                                </li>
+                                <li>
+                                    <%= link_to 'Agents (PDF)', agents_path(format: :pdf) %>
+                                </li>                                                                                                 
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>                     
 
                     </ul>
                 </div>

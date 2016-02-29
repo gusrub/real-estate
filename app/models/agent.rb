@@ -59,4 +59,16 @@ class Agent < ActiveRecord::Base
     }
   end 
 
+  def self.to_csv
+    attributes = %w{id comission phone mobile user_id created_at updated_at}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |agent|
+        csv << attributes.map{ |attr| agent.send(attr) }
+      end
+    end
+  end
+
 end
