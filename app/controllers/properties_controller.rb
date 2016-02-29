@@ -4,6 +4,7 @@ class PropertiesController < ApplicationController
   before_action :load_agents, only: [:show, :edit, :new, :create, :update, :add_customer, :remove_customer]
   before_action :load_customers, only: [:show, :edit, :new, :create, :update, :add_customer, :remove_customer]
   before_action :upload_photo, only: [:create, :update]
+  before_action :load_my_properties, only: [:my_properties]
 
   # GET /properties
   # GET /properties.json
@@ -165,6 +166,14 @@ class PropertiesController < ApplicationController
     end    
   end
 
+  def my_properties
+    @page_title = "My Properties"
+    respond_to  do |format| 
+      format.html { render :my_properties }
+      format.json { render json: @my_properties, status: :ok }
+    end  
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_property
@@ -199,6 +208,11 @@ class PropertiesController < ApplicationController
         @leads = Customer.joins(:user).pluck("CONCAT(users.first_name,' ' ,users.last_name)", "customers.id")
         @customers = []
       end
+    end
+
+    def load_my_properties
+      @customer = Customer.find_by(user_id: @current_user.id)
+      @my_properties = @customer.properties
     end
 
     def upload_photo

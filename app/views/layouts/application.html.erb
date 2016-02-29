@@ -76,16 +76,26 @@
                         <li>
                             <a href="#"><i class="fa fa-home fa-fw"></i> Properties<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                                <% if ["admin", "agent"].include?(@current_user.role) %>
                                 <li>
                                     <%= link_to 'Property List', properties_path %>
                                 </li>
+                                <% end %>
+                                <% if ["customer"].include?(@current_user.role) %>
+                                <li>
+                                    <%= link_to 'My Properties', my_properties_properties_path %>
+                                </li> 
+                                <% end %>
+                                <% if ["admin", "agent"].include?(@current_user.role) %>                               
                                 <li>
                                     <%= link_to 'New Property', new_property_path %>
                                 </li>
+                                <% end %>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 
+                        <% if ["admin"].include?(@current_user.role) %>
                         <li>
                             <a href="#"><i class="fa fa-briefcase fa-fw"></i> Agents<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -98,7 +108,9 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>                        
-                          
+                        <% end %>
+
+                        <% if ["admin", "agent"].include?(@current_user.role) %>
                         <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Customers<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -111,7 +123,9 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>   
+                        <% end %>
 
+                        <% if ["admin"].include?(@current_user.role) %>
                         <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i> Catalogs<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -121,7 +135,9 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        <% end %>
 
+                        <% if ["admin", "agent"].include?(@current_user.role) %>
                         <li>
                             <a href="#"><i class="fa fa-file-pdf-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -145,7 +161,8 @@
                                 </li>                                                                                                 
                             </ul>
                             <!-- /.nav-second-level -->
-                        </li>                     
+                        </li> 
+                        <% end %>                    
 
                     </ul>
                 </div>

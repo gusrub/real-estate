@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     collection do 
       get 'search'
       get 'page/:page' => 'properties#paginate', as: :page
+      get 'my_properties' => 'properties#my_properties', as: :my_properties
     end  
     member do
       post 'add_customer'

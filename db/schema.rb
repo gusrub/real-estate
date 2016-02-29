@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229073546) do
+ActiveRecord::Schema.define(version: 20160229225222) do
 
   create_table "agents", force: :cascade do |t|
     t.decimal  "comission",              precision: 4, scale: 2
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20160229073546) do
     t.integer  "property_id", limit: 4
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.boolean  "favorite"
   end
 
   add_index "customer_properties", ["customer_id"], name: "index_customer_properties_on_customer_id", using: :btree
