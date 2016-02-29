@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       get 'search'
       get 'page/:page' => 'properties#paginate', as: :page
     end  
+    member do
+      post 'add_customer'
+    end
   end
 
   resources :agents do

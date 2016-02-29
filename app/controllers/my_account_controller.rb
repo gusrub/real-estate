@@ -1,7 +1,6 @@
 class MyAccountController < ApplicationController
 
   before_action :set_user
-  before_action :set_title  
 
   def index
     
@@ -13,12 +12,12 @@ class MyAccountController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:type] = "success"
-      flash[:msg] = "Usuario actualizado"
+      flash[:type] = FLASH_TYPES[:success]
+      flash[:msg] = "User successfully updated" 
       redirect_to my_account_path
     else
-      flash[:type] = "warning"
-      flash[:msg] = "Por favor rellena los campos"
+      flash.now[:type] = FLASH_TYPES[:warning]
+      flash.now[:msg] = "Please fill in all required information"
       render :show
     end
   end
@@ -32,9 +31,5 @@ class MyAccountController < ApplicationController
   def set_user
     @user = User.find @current_user.id
   end
-
-  def set_title
-    @page_title = "User Preferences"
-  end  
 
 end

@@ -1,6 +1,8 @@
 class Property < ActiveRecord::Base
   belongs_to :state
   belongs_to :agent
+  before_destroy :delete_photo
+  before_save :save_photo
 
   enum status: [:for_sale, :sold]
 
@@ -74,5 +76,18 @@ class Property < ActiveRecord::Base
       total_record_count: total_record_count,
       records: properties
     }
-  end  
+  end
+
+  private
+    def delete_photo
+      if photo
+        File::delete(Rails.root.join('public', 'uploads', photo))
+      end
+    end  
+
+    def save_photo
+      if photo_changed?
+        FileUtils::mv(Rails.root.join('tmp', photo), Rails.root.join('public', 'uploads', photo))
+      end
+    end
 end

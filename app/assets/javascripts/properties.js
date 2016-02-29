@@ -8,3 +8,12 @@ $(".properties.index, .properties.paginate").ready(function(){
     $("#maps-modal-label").text(address);    
   });
 });
+$(".properties.new, .properties.edit, .properties.show").ready(function(){
+  $("#select-customer").change(function(){
+    if($(this).val() != "") {
+      $("#btn-add-customer").prop("disabled", false);
+    } else {
+      $("#btn-add-customer").prop("disabled", "disabled");
+    }
+  })  
+});

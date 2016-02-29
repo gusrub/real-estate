@@ -21,12 +21,13 @@
     <table class="table table-hover table-bordered table-responsive">
       <thead>
         <tr>
+          <th class="text-center"></th>
           <th class="text-center">Title</th>
-          <th class="text-center">Description</th>
           <th class="text-center">Address</th>
           <th class="text-center">City</th>
           <th class="text-center">Price</th>
           <th class="text-center">Broker</th>
+          <th class="text-center">Status</th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -34,12 +35,25 @@
       <tbody>
         <% @properties.each do |property| %>
           <tr>
+            <td class="text-left">
+            <% if property.photo %>
+              <%= image_tag("/uploads/#{property.photo}", size: "48x48") %>
+            <% else %>
+              <%= image_tag("/uploads/no_photo.png", size: "48x48") %>              
+            <% end %>
+            </td>            
             <td class="text-left"><%= property.title %></td>
-            <td class="text-left"><%= property.description.slice(0..50) %></td>
             <td class="text-left"><a href="#" class="map-link" data-toggle="modal" data-target="#maps-modal" data-address="<%= property.full_address %>"><%= property.address %></a></td>
             <td class="text-center"><%= property.location %></td>
             <td class="text-right"><%= number_to_currency(property.price, precision: 2) %></td>
             <td class="text-center"><%= property.agent.full_name %></td>
+            <td class="text-center">
+            <% if property.for_sale? %>
+              <span class="label label-success"><%= property.status.humanize %></span>
+            <% else %>
+              <span class="label label-default"><%= property.status.humanize %></span>            
+            <% end %>
+            </td>            
             <td class="text-center"><%= link_to 'Details', property %></td>
             <td class="text-center"><%= link_to 'Edit', edit_property_path(property) %></td>
             <td class="text-center"><%= link_to 'Delete', property, method: :delete, data: { confirm: 'Are you sure you want to delete this property?' } %></td>

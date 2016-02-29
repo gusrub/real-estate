@@ -1,7 +1,9 @@
 class PropertiesController < ApplicationController
-  before_action :set_property, only: [:show, :edit, :update, :destroy]
-  before_action :load_states, only: [:show, :edit, :new, :create, :update]
-  before_action :load_agents, only: [:show, :edit, :new, :create, :update]
+  before_action :set_property, only: [:show, :edit, :update, :destroy, :add_customer]
+  before_action :load_states, only: [:show, :edit, :new, :create, :update, :add_customer]
+  before_action :load_agents, only: [:show, :edit, :new, :create, :update, :add_customer]
+  before_action :load_customers, only: [:show, :edit, :new, :create, :update, :add_customer]
+  before_action :upload_photo, only: [:create, :update]
 
   # GET /properties
   # GET /properties.json
@@ -33,7 +35,6 @@ class PropertiesController < ApplicationController
   def create
     @page_title = "New Property"
     @property = Property.new(property_params)
-
     respond_to do |format|
       if @property.save
         flash[:type] = FLASH_TYPES[:success]
@@ -118,6 +119,22 @@ class PropertiesController < ApplicationController
     end   
   end
 
+  def add_customer
+    if params[:customer]
+      flash.now[:type] = FLASH_TYPES[:info]
+      flash.now[:msg] = "Customer selected is #{params[:customer]}"
+    else
+      flash.now[:type] = FLASH_TYPES[:warning]
+      flash.now[:msg] = "No customer selected"
+    end
+
+
+    respond_to  do |format| 
+      format.html { render :edit }
+      format.json { head :no_content }
+    end    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_property
@@ -142,5 +159,24 @@ class PropertiesController < ApplicationController
 
     def load_agents
       @agents = Agent.all
+    end
+
+    def load_customers
+      @customers = Customer.joins(:user).pluck("CONCAT(users.first_name,' ' ,users.last_name)", "customers.id")
+    end
+
+    def upload_photo
+      uploaded_io = params[:property][:photo_file]
+      return unless uploaded_io
+      begin
+        photo_filename = "#{SecureRandom::uuid}-#{uploaded_io.original_filename}"
+        File.open(Rails.root.join('tmp', photo_filename), 'wb') do |file|
+          file.write(uploaded_io.read)
+        end
+        @property.photo = photo_filename
+      rescue StandardError => e
+        raise StandardError.new "There was an internal error trying to upload the photo: #{e.message}"
+      end
+
     end      
 end
