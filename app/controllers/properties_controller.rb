@@ -1,8 +1,8 @@
 class PropertiesController < ApplicationController
-  before_action :set_property, only: [:show, :edit, :update, :destroy, :add_customer]
-  before_action :load_states, only: [:show, :edit, :new, :create, :update, :add_customer]
-  before_action :load_agents, only: [:show, :edit, :new, :create, :update, :add_customer]
-  before_action :load_customers, only: [:show, :edit, :new, :create, :update, :add_customer]
+  before_action :set_property, only: [:show, :edit, :update, :destroy, :add_customer, :remove_customer]
+  before_action :load_states, only: [:show, :edit, :new, :create, :update, :add_customer, :remove_customer]
+  before_action :load_agents, only: [:show, :edit, :new, :create, :update, :add_customer, :remove_customer]
+  before_action :load_customers, only: [:show, :edit, :new, :create, :update, :add_customer, :remove_customer]
   before_action :upload_photo, only: [:create, :update]
 
   # GET /properties
@@ -120,9 +120,10 @@ class PropertiesController < ApplicationController
   end
 
   def add_customer
-    if params[:customer]
-      flash.now[:type] = FLASH_TYPES[:info]
-      flash.now[:msg] = "Customer selected is #{params[:customer]}"
+    if params[:customer_id]
+      @property.customers << Customer.find(params[:customer_id])
+      flash[:type] = FLASH_TYPES[:info]
+      flash[:msg] = "Customer successfully added"
     else
       flash.now[:type] = FLASH_TYPES[:warning]
       flash.now[:msg] = "No customer selected"
@@ -130,7 +131,24 @@ class PropertiesController < ApplicationController
 
 
     respond_to  do |format| 
-      format.html { render :edit }
+      format.html { redirect_to @property }
+      format.json { head :no_content }
+    end    
+  end
+
+  def remove_customer
+    if params[:customer_id]
+      @property.customer_properties.where(customer_id: params[:customer_id]).first.destroy
+      flash[:type] = FLASH_TYPES[:info]
+      flash[:msg] = "Customer successfully removed"
+    else
+      flash.now[:type] = FLASH_TYPES[:warning]
+      flash.now[:msg] = "No customer selected"
+    end
+
+
+    respond_to  do |format| 
+      format.html { redirect_to @property }
       format.json { head :no_content }
     end    
   end
@@ -162,7 +180,13 @@ class PropertiesController < ApplicationController
     end
 
     def load_customers
-      @customers = Customer.joins(:user).pluck("CONCAT(users.first_name,' ' ,users.last_name)", "customers.id")
+      if @property
+        @leads = Customer.joins(:user).where.not(id: Property.find(params[:id]).customers.ids).pluck("CONCAT(users.first_name,' ' ,users.last_name)", "customers.id")
+        @customers = Customer.joins(:user).where(id: Property.find(params[:id]).customers.ids).pluck("CONCAT(users.first_name,' ' ,users.last_name)", "customers.id")
+      else
+        @leads = Customer.joins(:user).pluck("CONCAT(users.first_name,' ' ,users.last_name)", "customers.id")
+        @customers = []
+      end
     end
 
     def upload_photo

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227211806) do
+ActiveRecord::Schema.define(version: 20160229073546) do
 
   create_table "agents", force: :cascade do |t|
     t.decimal  "comission",              precision: 4, scale: 2
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20160227211806) do
   end
 
   add_index "agents", ["user_id"], name: "index_agents_on_user_id", using: :btree
+
+  create_table "customer_properties", force: :cascade do |t|
+    t.integer  "customer_id", limit: 4
+    t.integer  "property_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "customer_properties", ["customer_id"], name: "index_customer_properties_on_customer_id", using: :btree
+  add_index "customer_properties", ["property_id"], name: "index_customer_properties_on_property_id", using: :btree
 
   create_table "customers", force: :cascade do |t|
     t.integer  "title",      limit: 4
@@ -74,6 +84,8 @@ ActiveRecord::Schema.define(version: 20160227211806) do
   end
 
   add_foreign_key "agents", "users"
+  add_foreign_key "customer_properties", "customers"
+  add_foreign_key "customer_properties", "properties"
   add_foreign_key "customers", "users"
   add_foreign_key "properties", "agents"
   add_foreign_key "properties", "states"

@@ -3,6 +3,8 @@ class Property < ActiveRecord::Base
   belongs_to :agent
   before_destroy :delete_photo
   before_save :save_photo
+  has_many :customer_properties
+  has_many :customers, through: :customer_properties
 
   enum status: [:for_sale, :sold]
 

@@ -1,5 +1,7 @@
 class Customer < ActiveRecord::Base
   belongs_to :user, dependent: :destroy
+  has_many :customer_properties
+  has_many :properties, through: :customer_properties
   accepts_nested_attributes_for :user, allow_destroy: true
 
   validates :mobile, presence: true

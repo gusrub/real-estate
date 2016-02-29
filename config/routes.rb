@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end  
     member do
       post 'add_customer'
+      get 'remove_customer/:customer_id' => 'properties#remove_customer', as: :remove_customer
     end
   end
 

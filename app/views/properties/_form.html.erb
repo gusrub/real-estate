@@ -121,9 +121,9 @@
           <% else %>
             <% @disable_add_customer=nil %>
           <% end%>
-          <%= form_tag("#{@property.id}/add_customer", method: :post) do %>
+          <%= form_tag(add_customer_property_path(@property), method: :post) do %>
             <div class="form-group">
-            <%= select_tag(:customer, options_for_select(@customers), include_blank: true, class: "form-control", id: "select-customer", disabled: @disable_add_customer) %> 
+            <%= select_tag(:customer_id, options_for_select(@leads), include_blank: true, class: "form-control", id: "select-customer", disabled: @disable_add_customer) %> 
             </div>
             <div class="form-group">
             <%= submit_tag("Add customer", class: "btn btn-primary", disabled: "disabled", id: "btn-add-customer", "data-toggle": "tooltip", "data-placement": "bottom", title: "Select a customer to add it") %>
@@ -132,14 +132,12 @@
           </div>
         </div>      
         <table class="table">
+          <% @customers.each do |c| %>
           <tr>
-            <td>John Wayne</td>
-            <td>Test</td>
+            <td><%= c[0]%></td>
+            <td><%= link_to 'remove', remove_customer_property_path(@property, c[1]) %></td>
           </tr>
-          <tr>
-            <td>Jane Fonda</td>
-            <td>Test</td>
-          </tr>          
+          <% end %>          
         </table>
       </div>
     </div>    
