@@ -169,7 +169,7 @@ class PropertiesController < ApplicationController
       uploaded_io = params[:property][:photo_file]
       return unless uploaded_io
       begin
-        photo_filename = "#{SecureRandom::uuid}-#{uploaded_io.original_filename}"
+        photo_filename = "#{SecureRandom::uuid}#{File::extname(uploaded_io.original_filename)}"
         File.open(Rails.root.join('tmp', photo_filename), 'wb') do |file|
           file.write(uploaded_io.read)
         end
