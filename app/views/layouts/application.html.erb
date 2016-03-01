@@ -137,7 +137,7 @@
                         </li>
                         <% end %>
 
-                        <% if ["admin", "agent"].include?(@current_user.role) %>
+                        <% if ["admin"].include?(@current_user.role) %>
                         <li>
                             <a href="#"><i class="fa fa-file-pdf-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
